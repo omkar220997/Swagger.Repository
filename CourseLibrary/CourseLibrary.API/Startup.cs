@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -12,9 +13,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Serialization;
 using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 
 namespace CourseLibrary.API
 {
+    [ApiConventionType(typeof(DefaultApiConventions))]
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -27,9 +32,30 @@ namespace CourseLibrary.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc(setupAction =>
+            {
+                setupAction.Filters.Add(
+                    new ProducesResponseTypeAttribute(StatusCodes.Status400BadRequest));
+                setupAction.Filters.Add(
+                    new ProducesResponseTypeAttribute(StatusCodes.Status406NotAcceptable));
+                setupAction.Filters.Add(
+                    new ProducesResponseTypeAttribute(StatusCodes.Status500InternalServerError));
+
+                setupAction.OutputFormatters.Add(new XmlSerializerOutputFormatter());
+
+                var jsonOutputFormatter=setupAction.OutputFormatters.OfType<NewtonsoftJsonOutputFormatter>().FirstOrDefault();
+                if(jsonOutputFormatter != null)
+                {
+                    if (jsonOutputFormatter.SupportedMediaTypes.Contains("text/jsom"))
+                    {
+                        jsonOutputFormatter.SupportedMediaTypes.Remove("text/json");
+                    }
+                }
+            });
             services.AddControllers(setupAction =>
             {
                 setupAction.ReturnHttpNotAcceptable = true;
+                
 
             }).AddNewtonsoftJson(setupAction =>
              {
@@ -45,8 +71,8 @@ namespace CourseLibrary.API
                     var problemDetailsFactory = context.HttpContext.RequestServices
                         .GetRequiredService<ProblemDetailsFactory>();
                     var problemDetails = problemDetailsFactory.CreateValidationProblemDetails(
-                            context.HttpContext, 
-                            context.ModelState); 
+                            context.HttpContext,
+                            context.ModelState);
 
                     // add additional info not added by default
                     problemDetails.Detail = "See the errors field for details.";
@@ -90,7 +116,34 @@ namespace CourseLibrary.API
             {
                 options.UseSqlServer(
                     @"Server=(localdb)\mssqllocaldb;Database=CourseLibraryDB;Trusted_Connection=True;");
-            }); 
+            });
+            services.AddSwaggerGen(setupAction =>
+            {
+                setupAction.SwaggerDoc("CourseLibraryOpenApiSpecification",
+                    new Microsoft.OpenApi.Models.OpenApiInfo()
+                    {
+                        Title = "CourseLibrary API",
+                        Version = "v1",
+                        Description = "Through this API you can access authors and their courses.",
+                        Contact = new Microsoft.OpenApi.Models.OpenApiContact() 
+                        { 
+                            Name="Omkar Kadam",
+                            Email="omkar.kadam@klingelnberg.com",
+                            Url=new Uri("https://www.twitter.com/OmkarKadam"),
+                            
+                        },
+                        License=new Microsoft.OpenApi.Models.OpenApiLicense()
+                        {
+                            Name="MIT License",
+                            Url=new Uri("https://opensource.org/licenses/MIT")
+                        },
+                     
+                    });
+                var xmlCommentsFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlCommentsFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentsFile);
+                setupAction.IncludeXmlComments(xmlCommentsFullPath);
+            });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -112,6 +165,19 @@ namespace CourseLibrary.API
                 });
 
             }
+            app.UseHttpsRedirection();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(setupAction =>
+            {
+                setupAction.SwaggerEndpoint("/swagger/CourseLibraryOpenApiSpecification/swagger.json", "CourseLibrary Api");
+               
+            
+            });
+            
+
+            app.UseStaticFiles();
 
             app.UseRouting();
 

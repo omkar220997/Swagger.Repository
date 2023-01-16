@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using CourseLibrary.API.Entities;
 using CourseLibrary.API.Models;
 using CourseLibrary.API.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -15,7 +17,13 @@ using System.Threading.Tasks;
 namespace CourseLibrary.API.Controllers
 {
     [ApiController]
+    [Produces("application/json", "application/xml")]
+    [Consumes("application/json", "application/xml")]
     [Route("api/authors/{authorId}/courses")]
+    [ProducesResponseType(StatusCodes.Status406NotAcceptable)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public class CoursesController : ControllerBase
     {
         private readonly ICourseLibraryRepository _courseLibraryRepository;
@@ -42,6 +50,18 @@ namespace CourseLibrary.API.Controllers
             return Ok(_mapper.Map<IEnumerable<CourseDto>>(coursesForAuthorFromRepo));
         }
 
+        /// <summary>
+        /// Get a Course by Id of Specific Author and Course
+        /// </summary>
+        /// <param name="authorId"> The Id of the course Author</param>
+        /// <param name="courseId">The Id of the Course</param>
+        /// <returns>An ActionResult of the type Course</returns>
+        ///<response code="200">Returns the requested Course</response>
+        ///<response code="400">Returns the Bad Request for requested Course</response>
+        ///<response code="404">Returns the Not Found for requested Course</response>
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet("{courseId}", Name = "GetCourseForAuthor")]
         public ActionResult<CourseDto> GetCourseForAuthor(Guid authorId, Guid courseId)
         {
@@ -75,13 +95,13 @@ namespace CourseLibrary.API.Controllers
 
             var courseToReturn = _mapper.Map<CourseDto>(courseEntity);
             return CreatedAtRoute("GetCourseForAuthor",
-                new { authorId = authorId, courseId = courseToReturn.Id }, 
+                new { authorId = authorId, courseId = courseToReturn.Id },
                 courseToReturn);
         }
 
         [HttpPut("{courseId}")]
-        public IActionResult UpdateCourseForAuthor(Guid authorId, 
-            Guid courseId, 
+        public IActionResult UpdateCourseForAuthor(Guid authorId,
+            Guid courseId,
             CourseForUpdateDto course)
         {
             if (!_courseLibraryRepository.AuthorExists(authorId))
@@ -119,7 +139,7 @@ namespace CourseLibrary.API.Controllers
         }
 
         [HttpPatch("{courseId}")]
-        public ActionResult PartiallyUpdateCourseForAuthor(Guid authorId, 
+        public ActionResult PartiallyUpdateCourseForAuthor(Guid authorId,
             Guid courseId,
             JsonPatchDocument<CourseForUpdateDto> patchDocument)
         {
@@ -149,7 +169,7 @@ namespace CourseLibrary.API.Controllers
                 var courseToReturn = _mapper.Map<CourseDto>(courseToAdd);
 
                 return CreatedAtRoute("GetCourseForAuthor",
-                    new { authorId, courseId = courseToReturn.Id }, 
+                    new { authorId, courseId = courseToReturn.Id },
                     courseToReturn);
             }
 

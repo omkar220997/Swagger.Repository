@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CourseLibrary.API.Entities
 {
+#pragma warning disable CS1591
     public class Course
     {
         [Key]       
@@ -21,4 +22,5 @@ namespace CourseLibrary.API.Entities
 
         public Guid AuthorId { get; set; }
     }
+#pragma warning restore CS1591
 }

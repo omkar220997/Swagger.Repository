@@ -1,0 +1,155 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CourseLibrary.API</name>
+    </assembly>
+    <members>
+        <member name="M:CourseLibrary.API.Controllers.AuthorsController.GetAuthor(System.Guid)">
+            <summary>
+            Get an Author by his/her id
+            </summary>
+            <param name="authorId">The id of the author you want to get</param> 
+            <returns>An Author with id, firstname and lastname fields</returns>
+        </member>
+        <member name="M:CourseLibrary.API.Controllers.AuthorsController.UpdateAuthor(System.Guid,CourseLibrary.API.Models.AuthorForUpdate)">
+            <summary>
+            Update an Author by his/her Id
+            </summary>
+            <param name="authorId">The Id of an Author you want to get.</param>
+            <param name="authorForUpdate">The fields of an author you want to update</param>
+            <returns>An Author with updated id, firstname and lastname</returns>
+        </member>
+        <member name="M:CourseLibrary.API.Controllers.AuthorsController.PartiallyUpdateAuthor(System.Guid,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{CourseLibrary.API.Models.AuthorForPartiallyUpdateDto})">
+             <summary>
+             Partially update the author
+             </summary>
+             <param name="authorId">the author id to get</param>
+             <param name="patchAuthor">The fields of author you want to update</param>
+             <returns>An ActionResult of type Author </returns>
+             <remarks>
+             Sample request (this request updates for author's FirstName )\
+             PATCH /authors/id\
+             [\
+                 {\
+                     "op": "replace",\
+                     "path": "/firstname",\
+                     "value": "new first name"\
+                  }
+             ] 
+            </remarks>
+        </member>
+        <member name="M:CourseLibrary.API.Controllers.CoursesController.GetCourseForAuthor(System.Guid,System.Guid)">
+             <summary>
+             Get a Course by Id of Specific Author and Course
+             </summary>
+             <param name="authorId"> The Id of the course Author</param>
+             <param name="courseId">The Id of the Course</param>
+             <returns>An ActionResult of the type Course</returns>
+            <response code="200">Returns the requested Course</response>
+            <response code="400">Returns the Bad Request for requested Course</response>
+            <response code="404">Returns the Not Found for requested Course</response>
+        </member>
+        <member name="T:CourseLibrary.API.Entities.Author">
+            <summary>
+            Author with Id, FirstName, LastName,DateOfBirth and MainCategory fields
+            </summary>
+        </member>
+        <member name="P:CourseLibrary.API.Entities.Author.Id">
+            <summary>
+            The Id of the Author
+            </summary>
+        </member>
+        <member name="P:CourseLibrary.API.Entities.Author.FirstName">
+            <summary>
+            First Name of the author
+            </summary>
+        </member>
+        <member name="P:CourseLibrary.API.Entities.Author.LastName">
+            <summary>
+            Last Name of the author
+            </summary>
+        </member>
+        <member name="P:CourseLibrary.API.Entities.Author.DateOfBirth">
+            <summary>
+            Date of birth of author
+            </summary>
+        </member>
+        <member name="P:CourseLibrary.API.Entities.Author.MainCategory">
+            <summary>
+            Category if the author
+            </summary>
+        </member>
+        <member name="T:CourseLibrary.API.Models.AuthorDto">
+            <summary>
+            An Author with Id, Name, Age and Category fields
+            
+            </summary>
+        </member>
+        <member name="P:CourseLibrary.API.Models.AuthorDto.Id">
+            <summary>
+            The Id of the Author
+            </summary>
+        </member>
+        <member name="P:CourseLibrary.API.Models.AuthorDto.Name">
+            <summary>
+            Name of the author
+            </summary>
+        </member>
+        <member name="P:CourseLibrary.API.Models.AuthorDto.Age">
+            <summary>
+            Age of Author
+            </summary>
+        </member>
+        <member name="P:CourseLibrary.API.Models.AuthorDto.MainCategory">
+            <summary>
+            Category of AAuthor
+            </summary>
+        </member>
+        <member name="T:CourseLibrary.API.Models.AuthorForPartiallyUpdateDto">
+            <summary>
+            Partially update an author of firstname 
+            </summary>
+        </member>
+        <member name="P:CourseLibrary.API.Models.AuthorForPartiallyUpdateDto.FirstName">
+            <summary>
+            First Name of author
+            </summary>
+        </member>
+        <member name="T:CourseLibrary.API.Models.AuthorForUpdate">
+            <summary>
+            Author for update with firstname and lastname fields
+            </summary>
+        </member>
+        <member name="P:CourseLibrary.API.Models.AuthorForUpdate.Id">
+            <summary>
+            The Id  of Author
+            </summary>
+        </member>
+        <member name="P:CourseLibrary.API.Models.AuthorForUpdate.FirstName">
+            <summary>
+            The First Name of Author
+            </summary>
+        </member>
+        <member name="P:CourseLibrary.API.Models.AuthorForUpdate.LastName">
+            <summary>
+            the Last Name of Author
+            </summary>
+        </member>
+        <member name="T:CourseLibrary.API.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:CourseLibrary.API.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:CourseLibrary.API.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+    </members>
+</doc>
