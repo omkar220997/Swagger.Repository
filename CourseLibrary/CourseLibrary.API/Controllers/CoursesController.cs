@@ -20,6 +20,7 @@ namespace CourseLibrary.API.Controllers
     [Produces("application/json", "application/xml")]
     [Consumes("application/json", "application/xml")]
     [Route("api/authors/{authorId}/courses")]
+    //[ApiExplorerSettings(GroupName = "CourseLibraryOpenApiSpecificationCourses")]
     [ProducesResponseType(StatusCodes.Status406NotAcceptable)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]

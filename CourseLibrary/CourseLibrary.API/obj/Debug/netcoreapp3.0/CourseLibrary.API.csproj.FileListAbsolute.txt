@@ -41,7 +41,6 @@ C:\Users\kada_omk\Desktop\Training\Swagger\CourseLibrary\CourseLibrary.API\obj\D
 C:\Users\kada_omk\Desktop\Training\Swagger\CourseLibrary\CourseLibrary.API\obj\Debug\netcoreapp3.0\CourseLibrary.API.csproj.CoreCompileInputs.cache
 C:\Users\kada_omk\Desktop\Training\Swagger\CourseLibrary\CourseLibrary.API\obj\Debug\netcoreapp3.0\CourseLibrary.API.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\kada_omk\Desktop\Training\Swagger\CourseLibrary\CourseLibrary.API\obj\Debug\netcoreapp3.0\CourseLibrary.API.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\kada_omk\Desktop\Training\Swagger\CourseLibrary\CourseLibrary.API\obj\Debug\netcoreapp3.0\staticwebassets\CourseLibrary.API.StaticWebAssets.Manifest.cache
 C:\Users\kada_omk\Desktop\Training\Swagger\CourseLibrary\CourseLibrary.API\obj\Debug\netcoreapp3.0\CourseLibrary.API.RazorTargetAssemblyInfo.cache
 C:\Users\kada_omk\Desktop\Training\Swagger\CourseLibrary\CourseLibrary.API\obj\Debug\netcoreapp3.0\CourseLibrary.API.csproj.CopyComplete
 C:\Users\kada_omk\Desktop\Training\Swagger\CourseLibrary\CourseLibrary.API\obj\Debug\netcoreapp3.0\CourseLibrary.API.dll
@@ -52,3 +51,5 @@ C:\Users\kada_omk\Desktop\Training\Swagger\CourseLibrary\CourseLibrary.API\bin\D
 C:\Users\kada_omk\Desktop\Training\Swagger\CourseLibrary\CourseLibrary.API\obj\Debug\netcoreapp3.0\CourseLibrary.API.Properties.Resources.resources
 C:\Users\kada_omk\Desktop\Training\Swagger\CourseLibrary\CourseLibrary.API\obj\Debug\netcoreapp3.0\CourseLibrary.API.csproj.GenerateResource.cache
 C:\Users\kada_omk\Desktop\Training\Swagger\CourseLibrary\CourseLibrary.API\bin\Debug\netcoreapp3.0\CourseLibrary.Api.xml
+C:\Users\kada_omk\Desktop\Training\Swagger\CourseLibrary\CourseLibrary.API\bin\Debug\netcoreapp3.0\Microsoft.AspNetCore.Mvc.Versioning.dll
+C:\Users\kada_omk\Desktop\Training\Swagger\CourseLibrary\CourseLibrary.API\obj\Debug\netcoreapp3.0\staticwebassets\CourseLibrary.API.StaticWebAssets.Manifest.cache

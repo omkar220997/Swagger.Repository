@@ -3,6 +3,7 @@ using CourseLibrary.API.DbContexts;
 using CourseLibrary.API.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -13,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Serialization;
 using System;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -108,6 +110,7 @@ namespace CourseLibrary.API
                 };
             });
 
+
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddScoped<ICourseLibraryRepository, CourseLibraryRepository>();
@@ -117,19 +120,26 @@ namespace CourseLibrary.API
                 options.UseSqlServer(
                     @"Server=(localdb)\mssqllocaldb;Database=CourseLibraryDB;Trusted_Connection=True;");
             });
+            //services.AddApiVersioning(setupAction =>
+            //{
+            //    setupAction.AssumeDefaultVersionWhenUnspecified = true;
+            //    setupAction.DefaultApiVersion = new ApiVersion(1, 0);
+            //    setupAction.ReportApiVersions = true;
+            //});
+
             services.AddSwaggerGen(setupAction =>
             {
                 setupAction.SwaggerDoc("CourseLibraryOpenApiSpecification",
                     new Microsoft.OpenApi.Models.OpenApiInfo()
                     {
-                        Title = "CourseLibrary API",
+                        Title = "CourseLibrary API" ,
                         Version = "v1",
-                        Description = "Through this API you can access authors and their courses.",
+                        Description = "Through this API you can access authors and courses.",
                         Contact = new Microsoft.OpenApi.Models.OpenApiContact() 
                         { 
                             Name="Omkar Kadam",
                             Email="omkar.kadam@klingelnberg.com",
-                            Url=new Uri("https://www.twitter.com/OmkarKadam"),
+                            Url=new Uri("https://www.twitter.com/Omkar.Kadam"),
                             
                         },
                         License=new Microsoft.OpenApi.Models.OpenApiLicense()
@@ -139,11 +149,13 @@ namespace CourseLibrary.API
                         },
                      
                     });
+               
                 var xmlCommentsFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlCommentsFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentsFile);
                 setupAction.IncludeXmlComments(xmlCommentsFullPath);
             });
-            
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -171,8 +183,18 @@ namespace CourseLibrary.API
 
             app.UseSwaggerUI(setupAction =>
             {
+                setupAction.InjectStylesheet("/Assets/custom-ui.css");
+
+                setupAction.IndexStream = () => GetType().Assembly.GetManifestResourceStream("CourseLibrary.Api.EmbeddedAssets.index.html");
                 setupAction.SwaggerEndpoint("/swagger/CourseLibraryOpenApiSpecification/swagger.json", "CourseLibrary Api");
-               
+                //setupAction.SwaggerEndpoint("/swagger/CourseLibraryOpenApiSpecificationCourses/swagger.json", "CourseLibrary Api(Courses)");
+                //setupAction.RoutePrefix = "";
+
+                setupAction.DefaultModelExpandDepth(2);
+                setupAction.DefaultModelRendering(Swashbuckle.AspNetCore.SwaggerUI.ModelRendering.Model);
+                setupAction.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.None);
+                setupAction.EnableDeepLinking();
+                setupAction.DisplayOperationId();
             
             });
             

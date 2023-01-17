@@ -22,6 +22,7 @@ namespace CourseLibrary.API.Profiles
             CreateMap<Models.AuthorForCreationDto, Entities.Author>();
             CreateMap< Models.AuthorForUpdate,Entities.Author>();
             CreateMap<Models.AuthorForPartiallyUpdateDto, Entities.Author>();
+            CreateMap< Entities.Author, Models.AuthorWithConcatenatedName>();
         }
     }
 }

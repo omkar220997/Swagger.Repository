@@ -1,12 +1,15 @@
 ﻿using AutoMapper;
+using CourseLibrary.API.Attributes;
 using CourseLibrary.API.Entities;
 using CourseLibrary.API.Helpers;
 using CourseLibrary.API.Models;
 using CourseLibrary.API.ResourceParameters;
 using CourseLibrary.API.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Net.Http.Headers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +20,7 @@ namespace CourseLibrary.API.Controllers
    
     [ApiController]
     [Route("api/authors")]
+    //[ApiExplorerSettings(GroupName = "CourseLibraryOpenApiSpecificationAuthors")]
     public class AuthorsController : ControllerBase
     {
         private readonly ICourseLibraryRepository _courseLibraryRepository;
@@ -39,12 +43,35 @@ namespace CourseLibrary.API.Controllers
             var authorsFromRepo = _courseLibraryRepository.GetAuthors(authorsResourceParameters);
             return Ok(_mapper.Map<IEnumerable<AuthorDto>>(authorsFromRepo));
         }
+
+        //[HttpGet("{authorId}")]
+        //[ProducesResponseType(StatusCodes.Status404NotFound)]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[Produces("application/vnd.marvin.bookwithconcatenatedname+json")]
+        //public ActionResult<AuthorWithConcatenatedName>GetAuthorWithConcatenstedAuthorName(Guid authorId)
+        //{
+        //    if (!_courseLibraryRepository.AuthorExists(authorId))
+        //    {
+        //        return NotFound();
+        //    }
+        //    var authorFromRepo=_courseLibraryRepository.GetAuthor(authorId);
+        //    if(authorFromRepo == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return Ok(_mapper.Map<AuthorWithConcatenatedName>(authorFromRepo));
+        //}
+
+
+
+
         /// <summary>
         /// Get an Author by his/her id
         /// </summary>
         /// <param name="authorId">The id of the author you want to get</param> 
         /// <returns>An Author with id, firstname and lastname fields</returns>
         [HttpGet("{authorId}", Name ="GetAuthor")]
+
         public IActionResult GetAuthor(Guid authorId)
         {
             var authorFromRepo = _courseLibraryRepository.GetAuthor(authorId);
@@ -62,7 +89,7 @@ namespace CourseLibrary.API.Controllers
         /// <param name="authorId">The Id of an Author you want to get.</param>
         /// <param name="authorForUpdate">The fields of an author you want to update</param>
         /// <returns>An Author with updated id, firstname and lastname</returns>
-        [HttpPut("{authorId}")]
+        [HttpPut("{authorId}",Name ="PutAuthor")]
         public ActionResult<AuthorForUpdate> UpdateAuthor(Guid authorId,AuthorForUpdate authorForUpdate)
         {
             var authorFromRepo= _courseLibraryRepository.GetAuthor(authorId);
@@ -87,15 +114,15 @@ namespace CourseLibrary.API.Controllers
         /// <param name="patchAuthor">The fields of author you want to update</param>
         /// <returns>An ActionResult of type Author </returns>
         /// <remarks>
-        /// Sample request (this request updates for author's FirstName )\
-        /// PATCH /authors/id\
-        /// [\
-        ///     {\
-        ///         "op": "replace",\
-        ///         "path": "/firstname",\
-        ///         "value": "new first name"\
-        ///      }
-        /// ] 
+        /// Sample request (this request updates for author's **FirstName** )   
+        ///     PATCH /authors/id   
+        ///     [   
+        ///         {   
+        ///             "op": "replace",   
+        ///              "path": "/firstname",   
+        ///              "value": "new first name"   
+        ///          }   
+        ///     ] 
         ///</remarks>
         [HttpPatch("{authorId}")]
         public ActionResult PartiallyUpdateAuthor(Guid authorId, JsonPatchDocument<AuthorForPartiallyUpdateDto> patchAuthor)

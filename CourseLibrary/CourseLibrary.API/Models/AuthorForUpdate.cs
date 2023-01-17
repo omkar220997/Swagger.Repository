@@ -9,7 +9,8 @@ namespace CourseLibrary.API.Models
     public class AuthorForUpdate
     {
         /// <summary>
-        /// The Id  of Author
+        /// The Id  of 
+        /// **Author**
         /// </summary>
         [Required]
         public Guid Id { get; set; }

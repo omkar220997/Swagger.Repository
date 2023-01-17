@@ -51,17 +51,25 @@
             },
             "Microsoft.AspNetCore.JsonPatch": {
               "target": "Package",
-              "version": "[3.0.0, )"
+              "version": "[3.1.0, )"
             },
             "Microsoft.AspNetCore.Mvc.Api.Analyzers": {
               "target": "Package",
-              "version": "[3.0.0-preview3-19153-02, )"
+              "version": "[2.2.6, )"
+            },
+            "Microsoft.AspNetCore.Mvc.Core": {
+              "target": "Package",
+              "version": "[2.2.5, )"
             },
             "Microsoft.AspNetCore.Mvc.Formatters.Json": {
               "target": "Package",
               "version": "[2.2.0, )"
             },
             "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
+            "Microsoft.AspNetCore.Mvc.Versioning": {
               "target": "Package",
               "version": "[3.0.0, )"
             },

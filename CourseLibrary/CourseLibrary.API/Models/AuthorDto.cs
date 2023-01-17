@@ -12,7 +12,8 @@ namespace CourseLibrary.API.Models
     public class AuthorDto
     {
         /// <summary>
-        /// The Id of the Author
+        /// The Id of the 
+        /// **Author**
         /// </summary>
         public Guid Id { get; set; }
         /// <summary>

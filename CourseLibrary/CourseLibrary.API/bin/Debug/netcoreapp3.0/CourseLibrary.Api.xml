@@ -27,15 +27,15 @@
              <param name="patchAuthor">The fields of author you want to update</param>
              <returns>An ActionResult of type Author </returns>
              <remarks>
-             Sample request (this request updates for author's FirstName )\
-             PATCH /authors/id\
-             [\
-                 {\
-                     "op": "replace",\
-                     "path": "/firstname",\
-                     "value": "new first name"\
-                  }
-             ] 
+             Sample request (this request updates for author's **FirstName** )   
+                 PATCH /authors/id   
+                 [   
+                     {   
+                         "op": "replace",   
+                          "path": "/firstname",   
+                          "value": "new first name"   
+                      }   
+                 ] 
             </remarks>
         </member>
         <member name="M:CourseLibrary.API.Controllers.CoursesController.GetCourseForAuthor(System.Guid,System.Guid)">
@@ -61,7 +61,8 @@
         </member>
         <member name="P:CourseLibrary.API.Entities.Author.FirstName">
             <summary>
-            First Name of the author
+            First Name of the 
+            **author**
             </summary>
         </member>
         <member name="P:CourseLibrary.API.Entities.Author.LastName">
@@ -87,7 +88,8 @@
         </member>
         <member name="P:CourseLibrary.API.Models.AuthorDto.Id">
             <summary>
-            The Id of the Author
+            The Id of the 
+            **Author**
             </summary>
         </member>
         <member name="P:CourseLibrary.API.Models.AuthorDto.Name">
@@ -122,7 +124,8 @@
         </member>
         <member name="P:CourseLibrary.API.Models.AuthorForUpdate.Id">
             <summary>
-            The Id  of Author
+            The Id  of 
+            **Author**
             </summary>
         </member>
         <member name="P:CourseLibrary.API.Models.AuthorForUpdate.FirstName">

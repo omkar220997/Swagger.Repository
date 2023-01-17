@@ -16,7 +16,8 @@ namespace CourseLibrary.API.Entities
         public Guid Id { get; set; }
 
         /// <summary>
-        /// First Name of the author
+        /// First Name of the 
+        /// **author**
         /// </summary>
         [Required]
         [MaxLength(50)]
@@ -33,7 +34,7 @@ namespace CourseLibrary.API.Entities
         /// Date of birth of author
         /// </summary>
         [Required]
-        public DateTimeOffset DateOfBirth { get; set; }          
+        public DateTimeOffset DateOfBirth { get; set; }
 
         /// <summary>
         /// Category if the author
